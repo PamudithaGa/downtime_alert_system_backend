@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "downtime-alert-system-backend",
+  "private_key_id": "882e3f21d4abbb524c81f09879acefc418a33748",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4y35P52savMVP\nI0PEzimb8N4XJjIoMbY8j7Efmh22N3TrcFyhCzxjEV7X6d1jdxCbesKtG99JMwLg\nT2UePRsa0JaBD+IyWkfUjV9moW4GBO1DwtQ/n/yI0Daaz0VgmE7dURtyiRfkP6Ul\nFWXaWoJP3rZxbZmYbgwXWHYnlzV6zJVjijEo6GR4qdI9R3NzkelEKDc0HiAD6G8z\nNgAklNTzcyDzI3wzL73LCXnEeSnyQbGukp9/n+irCikM13NzHyfvxhq7zoABk000\nkjRA3IAIsWsKZchMKyRBJ8x4aK/vRU8HCZhbgVW31b+Zc74SrpN3pw7B3yv8E2Jw\nx0PefAS1AgMBAAECggEAR/4fS4ng1B3O0LHwaO/YjgQcwfADgl07ngRtAN7NzHt2\ndXLk42i5Me9Gf9+AfIuaULhWt5IwPxg8ep7zygAMWzoAKG/Ds9IwQcKB9D3X20h4\nFvoELnVpsPNNEqrFYIh10QsUIl7+i9GvyO65K4QvWGZvtWj5ecUFuOKhxXLHRvtb\nEOaCHVk0ZerTlPsd7DwUIRRnNN6UrjAcqR4/A5KXMtQIgH8y5enyZpwZwiaOuQfo\nqRwyQoZTCF3ZShd1+0AvPJ/LGVfbLoAG8l0J0asVSH1tJkQGgMWH0QG039I5uOUH\n3a3A5XUlbu+jcnt/VPuZTL92KX249rfZ9OFuZP2DUQKBgQDqt7YGMaXienKfhSjg\nq1fJhrHW8pljJB22U9SOaAQc4N23lAszW6SPZITFq2RpfF/1zkPbIeILBdRT5urS\njjeMKlsEEo2Mz1YGkmjqzVQVoLCd6Xpvpw2X78P0v9OruJIKs+qtOmaKY2CDEFbI\nEjNR1daBpGYuNO5wSUz66RnKiwKBgQDJjPiYLWkSoED4FdyHZfxvvbKc9ucF+w5u\n++hH96qPWaj9hQnkcbRoWUxZopprCaXgw5UzUEzUeV1w9m5Ah/THUZmx8TceXgsr\nGK0dgewNAJ8V2EZM2H3Wh5lJKsZAdmblfFWEi3JboeSWojr7iCHqjq0bpOnd2UOp\nJym33nGVvwKBgQCKD7eE2y09E1Na24OY65A+nPj8e0SYGUVU2uh7P1mz9tzTv8P6\n2JvqMHEcqFzu41a6ijJFsh945lvnYjub0EWCL+PLeHJEciyivvnxqwcblaJtsEjx\nZezMAx9bVn5WUsGsg/m1HVX1btD1JuY01ufS6ho7tYzY/w+FgshCCly+UwKBgDnd\nv4Hxh7lRSVXw8N/u6Ass65slSC7vZbV3nbkL4mxF0b73818jRiiverxBcxRIMNfX\nT37sDyLxtWI5Xm4omp6fTwFHwAt39Lzq2MkgBCW3h/U9ovFtNrPhOqFHJqRbWi+J\nAwSLBMpKMNcOvOB6tUIitJC7SGnpdwOZuuCPfQ0BAoGBAOVYvrrTM5DrNIcyQ2FU\nQUt6eetlaerGlxxHDMcbwB0oD8X9ZsaJW2jy3XeIYY3cbj40JPg2OVvgiYpjo7al\nZtZMYhmQNkyhUqSbwbtoWgy7s2DcHSYWO83in6vdM/hKuaRRiDcjpmKjd67W5lFW\nxzjmAo7RNmZyneVwLIXobuij\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@downtime-alert-system-backend.iam.gserviceaccount.com",
+  "client_id": "107719253673662319601",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40downtime-alert-system-backend.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
