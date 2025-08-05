@@ -1,11 +1,13 @@
+// index.js
 import express from "express";
 import cors from "cors";
 import mqtt from "mqtt";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 import { saveDataToMongo } from "./services/dataService.js";
 import { sendAlertNotification } from "./services/notificationService.js";
 import authRoutes from "./routes/auth.js";
-import connectDB from "./config/db.js";
+import logRoutes from "./routes/logs.js";
 
 dotenv.config();
 connectDB();
@@ -14,10 +16,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/logs", logRoutes); // 🔒 Protected routes
 
+// MQTT Setup
 const mqttClient = mqtt.connect(process.env.MQTT_BROKER_URL);
-
 mqttClient.on("connect", () => {
   console.log("✅ Connected to MQTT Broker");
   mqttClient.subscribe("machine/+/status");
