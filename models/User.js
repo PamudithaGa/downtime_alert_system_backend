@@ -7,11 +7,11 @@ const userSchema = new mongoose.Schema({
   department: {
     type: String,
     required: true,
-    enum: ["technical", "quality", "industrialeng","cuttimg","subassembly"], 
+    enum: ["technical", "quality", "industrialeng", "cutting", "subassembly"],
   },
   createdAt: { type: Date, default: Date.now },
   epf: { type: String, required: true, unique: true },
-        role: { type: String, required: true,},
+  role: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);

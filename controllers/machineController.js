@@ -1,6 +1,45 @@
 // controllers/machineController.js
 import MachineData from "../models/MachineData.js";
 
+export const addMachines = async (req, res) => {
+  try {
+    const {
+      machineId,
+      machineName,
+      machineOwner,
+      machineType,
+      section,
+      line,
+      status,
+    } = req.body;
+
+    if (!machineId || !machineName || !machineType || !status) {
+      return res.status(400).json({
+        error: "machineId, machineName, machineType, and status are required",
+      });
+    }
+
+    const newMachine = new MachineData({
+      machineId,
+      machineName,
+      machineOwner,
+      machineType,
+      section,
+      line,
+      status,
+    });
+
+    // Save to DB
+    const savedMachine = await newMachine.save();
+
+    res.status(201).json(savedMachine);
+  } catch (error) {
+    console.error("Error adding machine:", error);
+    res.status(500).json({ error: "Server error while adding machine" });
+  }
+};
+
+
 export const getMachines = async (req, res) => {
   try {
     const machines = await MachineData.find();
@@ -12,43 +51,6 @@ export const getMachines = async (req, res) => {
 };
 
 
-export const updateMachineStatus = async (req, res) => {
-  try {
-    const { id } = req.params; // Machine document _id
-    const { status } = req.body;
-
-    if (!["down", "arrived", "running"].includes(status)) {
-      return res.status(400).json({ message: "Invalid status value" });
-    }
-
-    const updateFields = { status };
-
-    // If status is "arrived", set m_ArrivalTime
-    if (status === "arrived") {
-      updateFields.m_ArrivalTime = new Date();
-    }
-
-    // If status is "running", set breakdownEndTime
-    if (status === "running") {
-      updateFields.breakdownEndTime = new Date();
-    }
-
-    const updatedMachine = await MachineData.findByIdAndUpdate(
-      id,
-      { $set: updateFields },
-      { new: true }
-    );
-
-    if (!updatedMachine) {
-      return res.status(404).json({ message: "Machine not found" });
-    }
-
-    res.json(updatedMachine);
-  } catch (error) {
-    console.error("Error updating machine status:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
 
 
 
