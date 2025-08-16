@@ -10,8 +10,6 @@ import authRoutes from "./routes/auth.js";
 import logRoutes from "./routes/logs.js";
 import machineRoutes from "./routes/machineRoutes.js";
 
-
-
 dotenv.config();
 connectDB();
 
@@ -23,9 +21,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/logs", logRoutes); 
 app.use("/api", machineRoutes);
-
-
-
 
 // MQTT Setup
 const mqttClient = mqtt.connect(process.env.MQTT_BROKER_URL);
