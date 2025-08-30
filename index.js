@@ -9,8 +9,9 @@ import { sendAlertNotification } from "./services/notificationService.js";
 import authRoutes from "./routes/auth.js";
 import logRoutes from "./routes/logs.js";
 import machineRoutes from "./routes/machineRoutes.js";
-
+import { initFirebaseListener } from "./services/firebaseService.js";
 dotenv.config();
+console.log("Loaded Firebase DB URL:", process.env.FIREBASE_DB_URL);
 connectDB();
 
 const app = express();
@@ -21,6 +22,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/logs", logRoutes); 
 app.use("/api", machineRoutes);
+
+
+
+initFirebaseListener();
 
 // MQTT Setup
 const mqttClient = mqtt.connect(process.env.MQTT_BROKER_URL);

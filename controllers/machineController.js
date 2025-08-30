@@ -65,3 +65,26 @@ export const getMachines = async (req, res) => {
   }
 };
 
+
+export const getDownMachines = async (req, res) => {
+  try {
+    const downMachines = await MachineData.find({ status: "down" });
+
+    const machinesWithLogs = await Promise.all(
+      downMachines.map(async (machine) => {
+        const logs = await MachineLogs.find({ machine: machine._id })
+          .sort({ timestamp: -1 })
+
+        return {
+          ...machine.toObject(),
+          logs,
+        };
+      })
+    );
+
+    res.status(200).json(machinesWithLogs);
+  } catch (error) {
+    console.error("Error fetching down machines:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
