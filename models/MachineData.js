@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const machineDataSchema = new mongoose.Schema({
-  machineId: { type: String, required: true },   // custom ID like "M001"
+  machineId: { type: String, required: true, unique: true },
   machineName: { type: String, required: true },
   machineOwner: { type: String },
   machineType: { type: String, required: true },

@@ -1,3 +1,4 @@
+// models/MachineLogs.js
 import mongoose from "mongoose";
 
 const machineLogsDataSchema = new mongoose.Schema({
@@ -16,6 +17,11 @@ const machineLogsDataSchema = new mongoose.Schema({
   breakdownEndTime: { type: Date },
   errorDescription: { type: String },
   timestamp: { type: Date, default: Date.now },
+  mechenicId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false,
+  },
 });
 
 const MachineLogs = mongoose.model("MachineLogsData", machineLogsDataSchema);

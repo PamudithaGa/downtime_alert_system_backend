@@ -21,8 +21,23 @@ export const registerUser = async (req, res) => {
     if (existingUserEpf) {
       return res.status(409).json({ message: "User already exists." });
     }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Prepare production structure if department is production
+    let productionData;
+    if (department === "production") {
+      productionData = {
+        sections: Array.from({ length: 6 }, (_, i) => ({
+          name: `Section${i + 1}`,
+          lines: Array.from({ length: 9 }, (_, j) => ({
+            name: `Line${j + 1}`,
+            teamLeaders: [], // empty at registration
+          })),
+        })),
+      };
+    }
 
     // Save new user
     const newUser = new User({
@@ -32,6 +47,7 @@ export const registerUser = async (req, res) => {
       department,
       epf,
       role,
+      production: productionData,
     });
 
     await newUser.save();
@@ -43,6 +59,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// Login function
 export const loginUser = async (req, res) => {
   try {
     const { epf, password } = req.body;
