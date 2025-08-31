@@ -29,17 +29,6 @@ export const updateMachineStatus = async (req, res) => {
       breakdownEndTime = new Date();
     }
 
-    // Create a log entry
-    // const logEntry = await MachineLogsData.create({
-    //   machineId: machine.machineId, // Use machine's unique ID
-    //   m_Id: id, // MongoDB ObjectId of the machine
-    //   status,
-    //   breakdownStartTime,
-    //   m_ArrivalTime,
-    //   breakdownEndTime,
-    //   errorDescription: errorDescription || "",
-    // });
-
     const logEntry = await MachineLogs.create({
       machine: id, // ObjectId reference
       status,
