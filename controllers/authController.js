@@ -4,28 +4,64 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import authMiddleware from "../middleware/auth.js";
 
+const departmentRoles = {
+  production: [
+    "Team Leader",
+    "Group Leader",
+    "Value stream executive",
+    "Value stream manager",
+  ],
+  technical: ["Staff member", "Executive"],
+  engineering: ["Mechanic", "Executive"],
+  quality: ["Staff member", "Executive"],
+  cutting: ["Staff member", "Executive"],
+  industrialeng: ["Staff member", "Executive"],
+  subassembly: [
+    "Team Leader",
+    "Group Leader",
+    "Value stream executive",
+    "Head of Department",
+  ],
+};
+
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, department, epf, role } = req.body;
+    const { name, email, password, department, epf, role, section, line } =
+      req.body;
 
-    if (!name || !email || !password || !epf || !role) {
+    // Basic field validation
+    if (!name || !email || !password || !epf || !department || !role) {
       return res.status(400).json({ message: "All fields are required." });
+    }
+
+    // Validate department
+    if (!departmentRoles[department]) {
+      return res
+        .status(400)
+        .json({ message: `Invalid department: ${department}` });
+    }
+
+    // Validate role for department
+    if (!departmentRoles[department].includes(role)) {
+      return res.status(400).json({
+        message: `${role} is not a valid role for department ${department}`,
+      });
     }
 
     // Check if user already exists
     const existingUserEmail = await User.findOne({ email });
     if (existingUserEmail) {
-      return res.status(409).json({ message: "User already exists." });
+      return res.status(409).json({ message: "Email already registered." });
     }
     const existingUserEpf = await User.findOne({ epf });
     if (existingUserEpf) {
-      return res.status(409).json({ message: "User already exists." });
+      return res.status(409).json({ message: "EPF already registered." });
     }
 
-    // Hash the password
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Prepare production structure if department is production
+    // Prepare production structure if needed
     let productionData;
     if (department === "production") {
       productionData = {
@@ -33,13 +69,39 @@ export const registerUser = async (req, res) => {
           name: `Section${i + 1}`,
           lines: Array.from({ length: 9 }, (_, j) => ({
             name: `Line${j + 1}`,
-            teamLeaders: [], // empty at registration
+            teamLeaders: [],
           })),
         })),
       };
+
+      // If team leader in production → must have section + line
+      if (role === "Team Leader" && (!section || !line)) {
+        return res.status(400).json({
+          message: "Team Leader in production must select a Section and Line.",
+        });
+      }
     }
 
-    // Save new user
+    let engineeringData;
+    if (department === "engineering") {
+      productionData = {
+        sections: Array.from({ length: 6 }, (_, i) => ({
+          name: `Section${i + 1}`,
+          lines: Array.from({ length: 9 }, (_, j) => ({
+            name: `Line${j + 1}`,
+            teamLeaders: [],
+          })),
+        })),
+      };
+
+      // If team leader in production → must have section + line
+      if (role === "Team Leader" && (!section || !line)) {
+        return res.status(400).json({
+          message: "Team Leader in production must select a Section and Line.",
+        });
+      }
+    }
+    // Save user
     const newUser = new User({
       name,
       email,
@@ -47,7 +109,10 @@ export const registerUser = async (req, res) => {
       department,
       epf,
       role,
+      section,
+      line,
       production: productionData,
+      engineering:engineeringData,
     });
 
     await newUser.save();
@@ -112,6 +177,16 @@ export const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Login Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+//Logout Function
+export const logoutUser = async (req, res) => {
+  try {
+    res.status(200).json({ message: "Logout successful!" });
+  } catch (error) {
+    console.error("Logout Error:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
