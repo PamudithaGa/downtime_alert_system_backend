@@ -1,9 +1,10 @@
+//controllers/machineLogsController
 import MachineData from "../models/MachineData.js";
 import MachineLogs from "../models/MachineLogs.js";
 
 export const updateMachineStatus = async (req, res) => {
   try {
-    const { id } = req.params; // MachineData _id
+    const { id } = req.params;
     const { status, errorDescription } = req.body;
 
     if (!["down", "arrived", "running"].includes(status)) {
@@ -30,12 +31,13 @@ export const updateMachineStatus = async (req, res) => {
     }
 
     const logEntry = await MachineLogs.create({
-      machine: id, // ObjectId reference
+      machine: id,
       status,
       breakdownStartTime,
       m_ArrivalTime,
       breakdownEndTime,
       errorDescription: errorDescription || "",
+      mechenicId: req.user.id, 
     });
 
     machine.status = status;

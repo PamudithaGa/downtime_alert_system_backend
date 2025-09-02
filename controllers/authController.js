@@ -12,7 +12,7 @@ const departmentRoles = {
     "Value stream manager",
   ],
   technical: ["Staff member", "Executive"],
-  engineering: ["Mechanic", "Executive"],
+  engineering: ["mechanic", "Executive"],
   quality: ["Staff member", "Executive"],
   cutting: ["Staff member", "Executive"],
   industrialeng: ["Staff member", "Executive"],

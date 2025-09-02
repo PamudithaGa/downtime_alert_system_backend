@@ -1,7 +1,19 @@
-// models/MachineLogs.js
 import mongoose from "mongoose";
 
 const machineLogsDataSchema = new mongoose.Schema({
+  firebaseId: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  issue: {
+    type: String,
+    required: false,
+  },
+  time: {
+    type: String, 
+    required: false, 
+  },
   machine: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "MachineData",
