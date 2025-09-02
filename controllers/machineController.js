@@ -68,7 +68,9 @@ export const getMachines = async (req, res) => {
 
 export const getDownMachines = async (req, res) => {
   try {
-    const downMachines = await MachineData.find({ status: "down" });
+const downMachines = await MachineData.find({
+  status: { $in: ["down", "arrived"] }
+});
 
     const machinesWithLogs = await Promise.all(
       downMachines.map(async (machine) => {

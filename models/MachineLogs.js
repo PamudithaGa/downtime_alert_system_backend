@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const machineLogsDataSchema = new mongoose.Schema({
   firebaseId: {
     type: String,
-    required: true,
+    required: false,
     unique: false,
   },
   issue: {
     type: String,
-    required: true,
+    required: false,
   },
   time: {
     type: String, 

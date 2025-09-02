@@ -24,10 +24,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/logs", logRoutes); 
 app.use("/api/machines", machineRoutes);
 
-
-
 initFirebaseListener();
-
 
 app.get("/", (req, res) => {
   res.send("IoT Backend is Running ✅");
