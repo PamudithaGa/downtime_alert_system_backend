@@ -68,14 +68,15 @@ export const getMachines = async (req, res) => {
 
 export const getDownMachines = async (req, res) => {
   try {
-const downMachines = await MachineData.find({
-  status: { $in: ["down", "arrived"] }
-});
+    const downMachines = await MachineData.find({
+      status: { $in: ["down", "arrived"] },
+    });
 
     const machinesWithLogs = await Promise.all(
       downMachines.map(async (machine) => {
         const logs = await MachineLogs.find({ machine: machine._id })
           .sort({ timestamp: -1 })
+          .select("status m_ArrivalTime breakdownStartTime breakdownEndTime issue timestamp"); 
 
         return {
           ...machine.toObject(),
