@@ -36,6 +36,12 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   epf: { type: String, required: true, unique: true },
+  phone: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^\+94\d{9}$/, "Phone number must be in format +94XXXXXXXXX"],
+  },
   department: {
     type: String,
     required: true,
