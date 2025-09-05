@@ -26,11 +26,28 @@ const departmentRoles = {
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, department, epf, role, section, line } =
-      req.body;
+    const {
+      name,
+      email,
+      password,
+      department,
+      epf,
+      role,
+      section,
+      line,
+      phone,
+    } = req.body;
 
     // Basic field validation
-    if (!name || !email || !password || !epf || !department || !role) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !epf ||
+      !department ||
+      !role ||
+      !phone
+    ) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
@@ -46,6 +63,22 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({
         message: `${role} is not a valid role for department ${department}`,
       });
+    }
+
+    // Validate phone format
+    const phoneRegex = /^\+94\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid phone number. Use format +94XXXXXXXXX" });
+    }
+
+    // ✅ Duplicate phone check
+    const existingUserPhone = await User.findOne({ phone });
+    if (existingUserPhone) {
+      return res
+        .status(409)
+        .json({ message: "Phone number already registered." });
     }
 
     // Check if user already exists
@@ -111,8 +144,9 @@ export const registerUser = async (req, res) => {
       role,
       section,
       line,
+      phone,
       production: productionData,
-      engineering:engineeringData,
+      engineering: engineeringData,
     });
 
     await newUser.save();
