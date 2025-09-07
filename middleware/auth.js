@@ -35,7 +35,7 @@ export const authMechanic = (req, res, next) => {
         .json({ message: "Forbidden: Only mechanics can update status" });
     }
 
-    req.user = decoded; // save user info (id, name, role, etc.)
+    req.user = decoded; 
     next();
   } catch (err) {
     console.error("Auth error:", err);
