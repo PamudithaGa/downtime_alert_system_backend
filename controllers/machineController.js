@@ -3,44 +3,6 @@ import MachineData from "../models/MachineData.js";
 import MachineLogs from "../models/MachineLogs.js";
 import { sendSmsToTechnicians } from "../services/smsService.js";
 
-// export const addMachines = async (req, res) => {
-//   try {
-//     const {
-//       machineId,
-//       machineName,
-//       machineOwner,
-//       machineType,
-//       section,
-//       line,
-//       status,
-//     } = req.body;
-
-//     if (!machineId || !machineName || !machineType || !status) {
-//       return res.status(400).json({
-//         error: "machineId, machineName, machineType, and status are required",
-//       });
-//     }
-
-//     const newMachine = new MachineData({
-//       machineId,
-//       machineName,
-//       machineOwner,
-//       machineType,
-//       section,
-//       line,
-//       status,
-//     });
-
-//     // Save to DB
-//     const savedMachine = await newMachine.save();
-
-//     res.status(201).json(savedMachine);
-//   } catch (error) {
-//     console.error("Error adding machine:", error);
-//     res.status(500).json({ error: "Server error while adding machine" });
-//   }
-// };
-
 export const addMachines = async (req, res) => {
   try {
     const {
@@ -69,11 +31,8 @@ export const addMachines = async (req, res) => {
       status,
     });
 
+    // Save to DB
     const savedMachine = await newMachine.save();
-
-    if (status === "down") {
-      await sendSmsToTechnicians(savedMachine);
-    }
 
     res.status(201).json(savedMachine);
   } catch (error) {
