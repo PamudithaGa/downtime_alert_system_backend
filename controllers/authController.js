@@ -4,7 +4,162 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import authMiddleware from "../middleware/auth.js";
 
-const departmentRoles = {
+// const departmentRoles = {
+//   production: [
+//     "Team Leader",
+//     "Group Leader",
+//     "Value stream executive",
+//     "Value stream manager",
+//   ],
+//   technical: ["Staff member", "Executive"],
+//   engineering: ["mechanic", "Executive"],
+//   quality: ["Staff member", "Executive"],
+//   cutting: ["Staff member", "Executive"],
+//   industrialeng: ["Staff member", "Executive"],
+//   subassembly: [
+//     "Team Leader",
+//     "Group Leader",
+//     "Value stream executive",
+//     "Head of Department",
+//   ],
+// };
+
+// export const registerUser = async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       email,
+//       password,
+//       department,
+//       epf,
+//       role,
+//       section,
+//       line,
+//       phone,
+//     } = req.body;
+
+//     // Basic field validation
+//     if (
+//       !name ||
+//       !email ||
+//       !password ||
+//       !epf ||
+//       !department ||
+//       !role ||
+//       !phone
+//     ) {
+//       return res.status(400).json({ message: "All fields are required." });
+//     }
+
+//     // Validate department
+//     if (!departmentRoles[department]) {
+//       return res
+//         .status(400)
+//         .json({ message: `Invalid department: ${department}` });
+//     }
+
+//     // Validate role for department
+//     if (!departmentRoles[department].includes(role)) {
+//       return res.status(400).json({
+//         message: `${role} is not a valid role for department ${department}`,
+//       });
+//     }
+
+//     // Validate phone format
+//     const phoneRegex = /^\+94\d{9}$/;
+//     if (!phoneRegex.test(phone)) {
+//       return res
+//         .status(400)
+//         .json({ message: "Invalid phone number. Use format +94XXXXXXXXX" });
+//     }
+
+//     // ✅ Duplicate phone check
+//     const existingUserPhone = await User.findOne({ phone });
+//     if (existingUserPhone) {
+//       return res
+//         .status(409)
+//         .json({ message: "Phone number already registered." });
+//     }
+
+//     // Check if user already exists
+//     const existingUserEmail = await User.findOne({ email });
+//     if (existingUserEmail) {
+//       return res.status(409).json({ message: "Email already registered." });
+//     }
+//     const existingUserEpf = await User.findOne({ epf });
+//     if (existingUserEpf) {
+//       return res.status(409).json({ message: "EPF already registered." });
+//     }
+
+//     // Hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Prepare production structure if needed
+//     let productionData;
+//     if (department === "production") {
+//       productionData = {
+//         sections: Array.from({ length: 6 }, (_, i) => ({
+//           name: `Section${i + 1}`,
+//           lines: Array.from({ length: 9 }, (_, j) => ({
+//             name: `Line${j + 1}`,
+//             teamLeaders: [],
+//           })),
+//         })),
+//       };
+
+//       // If team leader in production → must have section + line
+//       if (role === "Team Leader" && (!section || !line)) {
+//         return res.status(400).json({
+//           message: "Team Leader in production must select a Section and Line.",
+//         });
+//       }
+//     }
+
+//     let engineeringData;
+//     if (department === "engineering") {
+//       productionData = {
+//         sections: Array.from({ length: 6 }, (_, i) => ({
+//           name: `Section${i + 1}`,
+//           lines: Array.from({ length: 9 }, (_, j) => ({
+//             name: `Line${j + 1}`,
+//             teamLeaders: [],
+//           })),
+//         })),
+//       };
+
+//       // If team leader in production → must have section + line
+//       if (role === "Team Leader" && (!section || !line)) {
+//         return res.status(400).json({
+//           message: "Team Leader in production must select a Section and Line.",
+//         });
+//       }
+//     }
+//     // Save user
+//     const newUser = new User({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       department,
+//       epf,
+//       role,
+//       section,
+//       line,
+//       phone,
+//       production: productionData,
+//       engineering: engineeringData,
+//     });
+
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User registered successfully!" });
+//   } catch (error) {
+//     console.error("Registration Error:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
+
+const DEPARTMENT_ROLES = {
+  engineering: ["Mechanic", "Executive"],
   production: [
     "Team Leader",
     "Group Leader",
@@ -12,7 +167,6 @@ const departmentRoles = {
     "Value stream manager",
   ],
   technical: ["Staff member", "Executive"],
-  engineering: ["mechanic", "Executive"],
   quality: ["Staff member", "Executive"],
   cutting: ["Staff member", "Executive"],
   industrialeng: ["Staff member", "Executive"],
@@ -38,7 +192,7 @@ export const registerUser = async (req, res) => {
       phone,
     } = req.body;
 
-    // Basic field validation
+    // required fields
     if (
       !name ||
       !email ||
@@ -51,50 +205,50 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Validate department
-    if (!departmentRoles[department]) {
+    // department + role validation
+    if (!DEPARTMENT_ROLES[department]) {
       return res
         .status(400)
         .json({ message: `Invalid department: ${department}` });
     }
-
-    // Validate role for department
-    if (!departmentRoles[department].includes(role)) {
-      return res.status(400).json({
-        message: `${role} is not a valid role for department ${department}`,
-      });
+    if (!DEPARTMENT_ROLES[department].includes(role)) {
+      return res
+        .status(400)
+        .json({
+          message: `${role} is not a valid role for department ${department}`,
+        });
     }
 
-    // Validate phone format
-    const phoneRegex = /^\+94\d{9}$/;
-    if (!phoneRegex.test(phone)) {
+    // phone format
+    if (!/^\+94\d{9}$/.test(phone)) {
       return res
         .status(400)
         .json({ message: "Invalid phone number. Use format +94XXXXXXXXX" });
     }
 
-    // ✅ Duplicate phone check
-    const existingUserPhone = await User.findOne({ phone });
-    if (existingUserPhone) {
+    // require section+line for Engineering->Mechanic and Production->Team Leader
+    const needsSectionLine =
+      (department === "engineering" && role === "Mechanic") ||
+      (department === "production" && role === "Team Leader");
+    if (needsSectionLine && (!section || !line)) {
+      return res
+        .status(400)
+        .json({ message: "Please select both Section and Line." });
+    }
+
+    // duplicates
+    if (await User.findOne({ phone }))
       return res
         .status(409)
         .json({ message: "Phone number already registered." });
-    }
-
-    // Check if user already exists
-    const existingUserEmail = await User.findOne({ email });
-    if (existingUserEmail) {
+    if (await User.findOne({ email }))
       return res.status(409).json({ message: "Email already registered." });
-    }
-    const existingUserEpf = await User.findOne({ epf });
-    if (existingUserEpf) {
+    if (await User.findOne({ epf }))
       return res.status(409).json({ message: "EPF already registered." });
-    }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Prepare production structure if needed
+    // productionData only if department === 'production'
     let productionData;
     if (department === "production") {
       productionData = {
@@ -106,35 +260,8 @@ export const registerUser = async (req, res) => {
           })),
         })),
       };
-
-      // If team leader in production → must have section + line
-      if (role === "Team Leader" && (!section || !line)) {
-        return res.status(400).json({
-          message: "Team Leader in production must select a Section and Line.",
-        });
-      }
     }
 
-    let engineeringData;
-    if (department === "engineering") {
-      productionData = {
-        sections: Array.from({ length: 6 }, (_, i) => ({
-          name: `Section${i + 1}`,
-          lines: Array.from({ length: 9 }, (_, j) => ({
-            name: `Line${j + 1}`,
-            teamLeaders: [],
-          })),
-        })),
-      };
-
-      // If team leader in production → must have section + line
-      if (role === "Team Leader" && (!section || !line)) {
-        return res.status(400).json({
-          message: "Team Leader in production must select a Section and Line.",
-        });
-      }
-    }
-    // Save user
     const newUser = new User({
       name,
       email,
@@ -142,15 +269,13 @@ export const registerUser = async (req, res) => {
       department,
       epf,
       role,
-      section,
-      line,
       phone,
-      production: productionData,
-      engineering: engineeringData,
+      section, // store explicitly
+      line, // store explicitly
+      production: productionData, // only for production users
     });
 
     await newUser.save();
-
     res.status(201).json({ message: "User registered successfully!" });
   } catch (error) {
     console.error("Registration Error:", error);

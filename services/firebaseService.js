@@ -1,3 +1,4 @@
+//services/firebaseService.js
 import admin from "firebase-admin";
 import MachineData from "../models/MachineData.js";
 import MachineLogs from "../models/MachineLogs.js";
@@ -61,6 +62,13 @@ export const initFirebaseListener = () => {
       await machine.save();
 
       console.log("✅ New log created & machine status updated:", log._id);
+      if ((data.status || "down") === "down") {
+        const { sendSmsToTechnicians } = await import(
+          "../services/smsService.js"
+        );
+        await sendSmsToTechnicians(machine);
+        console.log(`📩 SMS alert sent for machine ${machine.machineName}`);
+      }
     } catch (err) {
       console.error("❌ Error inserting log:", err.message);
     }
@@ -98,7 +106,17 @@ export const initFirebaseListener = () => {
       machine.status = data.status || "down";
       await machine.save();
 
-      console.log("🔄 New log created for updated data & machine status synced:", log._id);
+      console.log(
+        "🔄 New log created for updated data & machine status synced:",
+        log._id
+      );
+      if ((data.status || "down") === "down") {
+        const { sendSmsToTechnicians } = await import(
+          "../services/smsService.js"
+        );
+        await sendSmsToTechnicians(machine);
+        console.log(`📩 SMS alert sent for machine ${machine.machineName}`);
+      }
     } catch (err) {
       console.error("❌ Error creating log on update:", err.message);
     }
