@@ -1,7 +1,6 @@
 // controllers/machineController.js
 import MachineData from "../models/MachineData.js";
 import MachineLogs from "../models/MachineLogs.js";
-import { sendSmsToTechnicians } from "../services/smsService.js";
 
 export const addMachines = async (req, res) => {
   try {
