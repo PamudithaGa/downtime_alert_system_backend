@@ -9,11 +9,10 @@ dotenv.config();
 const firebaseConfig = JSON.parse(
   readFileSync(new URL("../firebase-config.json", import.meta.url))
 );
-
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
   databaseURL: process.env.FIREBASE_DB_URL,
-  //  databaseURL: "https://downtimealerts-default-rtdb.asia-southeast1.firebasedatabase.app",
 });
 
 const db = admin.database();
