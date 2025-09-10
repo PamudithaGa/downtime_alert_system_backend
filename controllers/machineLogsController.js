@@ -19,12 +19,12 @@ export const updateMachineStatus = async (req, res) => {
     }
 
     // Determine times
-    let breakdownStartTime;
+    let time;
     let m_ArrivalTime;
     let breakdownEndTime;
 
     if (status === "down") {
-      breakdownStartTime = new Date();
+      time = new Date();
       // 🚨 send SMS to mechanics here
       await sendSmsToTechnicians(machine);
     } else if (status === "arrived") {
@@ -36,11 +36,12 @@ export const updateMachineStatus = async (req, res) => {
     const logEntry = await MachineLogs.create({
       machine: id,
       status,
-      breakdownStartTime,
+      time,
       m_ArrivalTime,
       breakdownEndTime,
       errorDescription: errorDescription || "",
       mechenicId: req.user.id,
+      timestamp: new Date(),
     });
 
     machine.status = status;
