@@ -24,7 +24,7 @@ const machineLogsDataSchema = new mongoose.Schema({
     required: true,
     enum: ["down", "arrived", "running"],
   },
-  breakdownStartTime: { type: Date },
+  // breakdownStartTime: { type: Date },
   m_ArrivalTime: { type: Date },
   breakdownEndTime: { type: Date },
   errorDescription: { type: String },

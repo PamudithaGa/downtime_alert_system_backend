@@ -75,7 +75,7 @@ export const getDownMachines = async (req, res) => {
         const logs = await MachineLogs.find({ machine: machine._id })
           .sort({ timestamp: -1 })
           .select(
-            "status m_ArrivalTime breakdownStartTime breakdownEndTime issue timestamp"
+            "status m_ArrivalTime time breakdownEndTime issue timestamp"
           );
 
         return {
