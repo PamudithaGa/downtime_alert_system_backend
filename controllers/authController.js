@@ -22,8 +22,9 @@ const DEPARTMENT_ROLES = {
     "Value stream executive",
     "Head of Department",
   ],
+  admin:["Admin"]
 };
-
+const GLOBAL_ROLES = ["Admin"];
 export const registerUser = async (req, res) => {
   try {
     const {
@@ -52,6 +53,7 @@ export const registerUser = async (req, res) => {
     }
 
     // department + role validation
+    if (!GLOBAL_ROLES.includes(role)) {
     if (!DEPARTMENT_ROLES[department]) {
       return res
         .status(400)
@@ -64,7 +66,7 @@ export const registerUser = async (req, res) => {
           message: `${role} is not a valid role for department ${department}`,
         });
     }
-
+  }
     // phone format
     if (!/^\+94\d{9}$/.test(phone)) {
       return res
@@ -74,6 +76,7 @@ export const registerUser = async (req, res) => {
 
     // require section+line for Engineering->Mechanic and Production->Team Leader
     const needsSectionLine =
+    !GLOBAL_ROLES.includes(role) &&
       (department === "engineering" && role === "Mechanic") ||
       (department === "production" && role === "Team Leader");
     if (needsSectionLine && (!section || !line)) {
