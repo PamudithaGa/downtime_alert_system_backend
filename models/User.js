@@ -8,6 +8,7 @@ const departmentRoles = {
   cutting: ["Staff member", "Executive"],
   industrialeng: ["Staff member", "Executive"],
   subassembly: ["Team Leader", "Group Leader", "Value stream executive", "Head of Department"],
+  Admin: ["Admin"],
 };
 
 const lineSchema = new mongoose.Schema({

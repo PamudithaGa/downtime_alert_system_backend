@@ -9,11 +9,10 @@ dotenv.config();
 const firebaseConfig = JSON.parse(
   readFileSync(new URL("../firebase-config.json", import.meta.url))
 );
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
-  databaseURL: "https://downtimealerts-default-rtdb.asia-southeast1.firebasedatabase.app"
-,
+  databaseURL: process.env.FIREBASE_DB_URL,
 });
 
 const db = admin.database();
@@ -24,7 +23,7 @@ export const initFirebaseListener = () => {
   const getTimestamps = (status) => {
     const now = new Date();
     return {
-      breakdownStartTime: status === "down" ? now : null,
+      time: status === "down" ? now : null,
       m_ArrivalTime: status === "arrived" ? now : null,
       breakdownEndTime: status === "running" ? now : null,
     };
@@ -41,7 +40,7 @@ export const initFirebaseListener = () => {
       });
       if (!machine) return console.error(`Machine not found: ${firebaseId}`);
 
-      const { breakdownStartTime, m_ArrivalTime, breakdownEndTime } =
+      const { time, m_ArrivalTime, breakdownEndTime } =
         getTimestamps(data.status || "down");
 
       const log = await MachineLogs.create({
@@ -50,9 +49,8 @@ export const initFirebaseListener = () => {
         status: data.status || "down",
         issue: data.issue || data.errorDescription || "Unknown issue",
         time: data.time || new Date().toISOString(),
-        breakdownStartTime,
-        m_ArrivalTime,
-        breakdownEndTime,
+        m_ArrivalTime: m_ArrivalTime || new Date().toISOString(),
+        breakdownEndTime : breakdownEndTime || new Date().toISOString(),
         errorDescription: data.errorDescription || null,
         mechenicId: data.mechenicId || null,
       });
@@ -61,7 +59,6 @@ export const initFirebaseListener = () => {
       machine.status = data.status || "down";
       await machine.save();
 
-      console.log("✅ New log created & machine status updated:", log._id);
       if ((data.status || "down") === "down") {
         const { sendSmsToTechnicians } = await import(
           "../services/smsService.js"
@@ -85,7 +82,7 @@ export const initFirebaseListener = () => {
       });
       if (!machine) return console.error(`Machine not found: ${firebaseId}`);
 
-      const { breakdownStartTime, m_ArrivalTime, breakdownEndTime } =
+      const { time, m_ArrivalTime, breakdownEndTime } =
         getTimestamps(data.status || "down");
 
       // Always create a new log, never overwrite
@@ -95,7 +92,7 @@ export const initFirebaseListener = () => {
         status: data.status || "down",
         issue: data.issue || data.errorDescription || "Unknown issue",
         time: data.time || new Date().toISOString(),
-        breakdownStartTime,
+        time,
         m_ArrivalTime,
         breakdownEndTime,
         errorDescription: data.errorDescription || null,

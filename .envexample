@@ -1,0 +1,23 @@
+// MONGODB_URI=mongodb+srv://pamudithagangana45:HydPyN22CbOft2Ix@ditectionalert.gz8xqcy.mongodb.net/downtime_alert_db?retryWrites=true&w=majority
+//JWT_EXPIRES_IN=1d
+//JWT_SECRET=f43480d69905d336266b7e6ebe2694bb23d944238a7cfb60a23edef2d4a054c5d069bb5bf42a6b9de7917a225bcc707343a049747d9e76ac7a01236da69cc0e1
+//PORT=5000
+//FIREBASE_DB_URL=https://downtimealerts-default-rtdb.asia-southeast1.firebasedatabase.app
+// FIREBASE_SERVICE_ACCOUNT_KEY={
+//   "type": "service_account",
+//   "project_id": "downtimealerts",
+//   "private_key_id": "80fd4c928de57d7c93b98a299867fa63bf14f398",
+//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC31vjRQsOL0iVu\nVUJER1SDhGMVEsIn4gkv5ZbYQEg1qC6ok83sC6RVucdZUYzLE1vRa90GyB4xK0g1\nkpzCbAObO2dMPu+oWrAkM4Eh9UZGTixAkYRTnh/6HkpIhtGKELdGsrdqSXJ1Im76\n/pYTWF7SMnsa0oTgfDzDLDTpv53XQi/2iasW6swof8z43n8Vm7+0kVNfp04g1DIl\n1+i/yTK6lOKWiZfpycH5XKkkOQgVRx4sdzY4PyCFjMbuUUmeuWUWHLoAK1k1tFj/\nK1FV4UiZcnZJdErk1QoJUmQak/NlT0L9MbIgVkfUqa8zTjcJ/0pdxehCL/K2+R2y\nDInB/6KnAgMBAAECggEACc4p/ENS2bjOLUnX3HtvewpLHJshBu6L7eWRe5xGHbKI\nNo6Xm6DtVXMwukdaupQgQBXANrXiwl2cHttgiBApyxRKiKsMrk6T+YJTv2NtKZ/O\nxWzdgXY8H2ORM7gZIgONOvSaSs17ENtSzwlYKNT8TbrKjR4wXybRONm5QsRpH0t9\nyxroEAuLxTWYfMD1gLcXUWmUpCjRALTuHldJkQ0qR4qvPhZ4zE8Zfxf45h8axrus\n9TorMr1+82Xxbo0SvgGzN9UFjo7bY+VZokrc64EM8j6miAHlLVEVTFw9FowhlPUo\ndq0bWynsy1TpIEaacWhVnPMmQJoA1k17EdC1ukjWaQKBgQDf7cNLvWe0lVpeoJWZ\nwl2ksZc+hyXDGqUpkqLqcVDkEOheacMskzFVd3QNLVrUV3F+4uRr5OIx/lm4WVrl\nM3jSaUHqG071h/pG0w1/qZzDkFEAMNAI6MVoS6KK8N1vlP6qo9y8QVpWmQERXzkA\n0nxxOZE1nm1eZGOgB+Vk9n7/TwKBgQDSK11f+ciIx9A98jufAT8znndsMy0y4bdz\nQvI1Pv/9weGhAqXpEM7abAy3M54p8I37f/quuNGVluqjU6J6T5wHjyO6SIGUShtd\nOtZcW2EosuMUbFH/w0iHTnlKXc4Wdt/2XF21u3GQZRiGmUG5T3B21icPmH/dbWbr\n5rxvKuORKQKBgFe9ous3cL4aU0mGpHeV5/lTOI7gh5RWCWcrtLgl5GsokNQFntsF\nZaw2XPuYzOEsziTIpHX+Pf8WyXLpWCs8qtfPNGuVfa/JMvCzW7Os8ubR0ls/xRPo\nmQkPscW9MRa6i7qy8Be3h70swHVdGUnQL8BxrQsUY4g7z6lxzplr2EETAoGBAJ1u\npm9yaGktZCxC+65L/M/p8IM4gq8OraDFkTGZk6C+TwmRNj6zvH+ZWJ0TKXM5IuI2\nJ84h2702Y2UdDSSZ5cMz0guErKwsJvtbS5+7Q7h85+UwjuwLmJTij7DJO8tQGMwu\nvHOZiaQkVo7c1oK9ov0hxfjEv2NaxDIJkTWk5vqhAoGBAI/56T3eqH09VFL/Ldiu\n1vKK0jB4sga6hYuvay4/DU+lC3rY27gpwwJvOssClUvxtot0oNHJGKmc8czcb3Ci\nrs/SAdWyiIVjNyxDYSSKIWbkhrp2/x0g8kLMGUBMqsA3S3SrWS+qe3CCy9CJebbs\nvCpZBcMJokKb/90Kp3LcAZqJ\n-----END PRIVATE KEY-----\n",
+//   "client_email": "firebase-adminsdk-fbsvc@downtimealerts.iam.gserviceaccount.com",
+//   "client_id": "114903634884109189418",
+//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+//   "token_uri": "https://oauth2.googleapis.com/token",
+//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40downtimealerts.iam.gserviceaccount.com",
+//   "universe_domain": "googleapis.com"
+// }
+
+
+// TWILIO_SID=
+// TWILIO_AUTH_TOKEN=
+// TWILIO_PHONE_NUMBER=
